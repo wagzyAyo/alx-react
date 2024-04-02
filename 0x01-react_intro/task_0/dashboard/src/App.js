@@ -4,18 +4,20 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <header>
-      <div className='App-header'>School dashboard</div>
-     </header>
-     <body>
-      <div className='App-body'> <p>Login to access the full dashboard</p></div>
-     </body>
-     <footer>
-      <div><p>Copyright 2020 - holberton School</p></div>
-     </footer>
-     
+        <div className="App-header">
+          <div><img src={logo} alt="logo" /></div>
+          <div><h1>School dashboard</h1></div>
+      </div>
+      <div className="App-body">
+        <p>
+          Login to access the full dashboard
+        </p>
+      </div>
+      <div className="App-footer">
+        <p>Copyright 2020 - holberton School</p>
+      </div>
     </div>
   );
 }
 
-export default App;
+export default App
