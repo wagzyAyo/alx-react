@@ -5,11 +5,11 @@ import { getLatestNotification } from './utils';
 
 function Notifiaction() {
     return(
-        <div className="Notifaction">
+        <div className="Notification">
             
             <button style={{
                 position: 'absolute',
-                right:'2px',
+                right:'5px',
                 top: '15px',
                 background: 'none',
                 border: 'none'
@@ -20,9 +20,12 @@ function Notifiaction() {
                 </button>
                 <p>Here is the list of notifications</p>
                 <ul>
-                    <li data-priority='default'>New course available</li>
-                    <li data-priority='urgent'>New resume available</li>
-                    <li dta-priority='urgent' dangerouslySetInnerHTML={{__html: getLatestNotification()}}></li>
+                <li style={{color:'blue'}}
+                    data-priority='default'>New course available</li>
+                    <li style={{color:'red'}}
+                     data-priority='urgent'>New resume available</li>
+                    <li style={{color:'red'}}
+                     dta-priority='urgent' dangerouslySetInnerHTML={{__html: getLatestNotification()}}></li>
                 </ul>
         </div>
     )
