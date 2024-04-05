@@ -17,11 +17,6 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
     },
-    optimization: {
-        splitChunks: {
-            chunks: 'all',
-        },
-    },
     devServer: {
         hot: true,
         static: path.join(__dirname, './dist'),
@@ -36,6 +31,16 @@ module.exports = {
             {
                 test: /\.css$/i,
                 use: ['style-loader', 'css-loader'],
+            },
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                    },
+                },
             },
             {
                 test: /\.(?:ico|gif|png|jpe?g|svg)$/i,
