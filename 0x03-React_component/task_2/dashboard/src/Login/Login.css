@@ -1,0 +1,20 @@
+.App-body {
+    text-align: start;
+    padding-left: 2em;
+    min-height:20rem;
+  }
+  
+  .App-body p {
+    margin-top: 3rem;
+    font-weight: 700;
+  }
+  
+input {
+    margin: 10px;
+  }
+  
+  .App-body button {
+    border-radius: 3px;
+    border: 1px solid black;
+  }
+  
