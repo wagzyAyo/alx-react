@@ -22,22 +22,29 @@ class App extends React.Component {
       {id: 2, name: 'Webpack', credit: 20},
       {id: 3, name: 'React', credit: 40}
     ];
-  
-    this.listNotifications = [
-      {id: 1, value: "New course available", type: "default"},
-      {id: 2, value: "New resume available", type: "urgent"},
-      {id: 3, html: {__html: getLatestNotification()}, type: "urgent"},
-    ];
+
     this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
     this.handleHideDrawer = this.handleHideDrawer.bind(this);
     this.logIn = this.logIn.bind(this);
     this.logOut = this.logOut.bind(this);
+    this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
+
     this.state = {
       displayDrawer: false,
       user: user,
-      logOut: this.logOut
+      logOut: this.logOut,
+      listNotifications: [
+        {id: 1, value: "New course available", type: "default"},
+        {id: 2, value: "New resume available", type: "urgent"},
+        {id: 3, html: {__html: getLatestNotification()}, type: "urgent"},
+      ]
     };
 
+  }
+
+  markNotificationAsRead(id) {
+    const newList = this.state.listNotifications.filter(not => not.id !== id);
+    this.setState({ listNotifications: newList });
   }
 
   logIn(email, password) {
@@ -93,7 +100,8 @@ class App extends React.Component {
       }}>
         <React.Fragment>
           <Notification
-            listNotifications={this.listNotifications}
+            listNotifications={this.state.listNotifications}
+            markNotificationAsRead={this.markNotificationAsRead}
             displayDrawer={this.state.displayDrawer}
             handleDisplayDrawer={this.handleDisplayDrawer}
             handleHideDrawer={this.handleHideDrawer}
