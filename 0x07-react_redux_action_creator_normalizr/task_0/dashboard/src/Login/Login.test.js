@@ -1,35 +1,48 @@
 import React from 'react';
+import { shallow } from 'enzyme';
 import Login from './Login';
-import { mount } from 'enzyme';
 import { StyleSheetTestUtils } from 'aphrodite';
 
-describe("testing the <Login /> component", () => {
-  let wrapper;
-
-  beforeEach(() => {
+describe('<Login />', () => {
+  beforeAll(() => {
     StyleSheetTestUtils.suppressStyleInjection();
-    wrapper = mount(<Login />);
+  });
+  afterAll(() => {
+    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
   });
 
-  it("Login component renders without crashing", () => {
-    expect(wrapper).toBeDefined();
+  const wrapper = shallow(<Login />);
+
+  it('render without crashing', () => {
+    expect(wrapper.exists());
   });
 
-  it("Login component renders 3 input tags", () => {
-    expect(wrapper.find("input")).toHaveLength(3);
+  it('labels', () => {
+    expect(wrapper.find('form label')).toHaveLength(2);
   });
 
-  it("Login component renders 2 label tags", () => {
-    expect(wrapper.find("label")).toHaveLength(2);
+  it('inputs', () => {
+    expect(wrapper.find('form input')).toHaveLength(2);
   });
 
-  it("verify that the submit button is disabled by default", () => {
-    expect(wrapper.find("input[type='submit']").props().disabled).toEqual(true);
+  it('button', () => {
+    const button = wrapper.find("form button[type='submit']");
+    expect(button).toHaveLength(1);
+    expect(button.prop('disabled')).toEqual(true);
   });
 
-  it("verify that after changing the value of the two inputs, the button is enabled", () => {
-    wrapper.find("#email").simulate('change', {target: {value: 't'}});
-    wrapper.find("#password").simulate('change', {target: {value: 't'}});
-    expect(wrapper.find("input[type='submit']").props().disabled).toEqual(false);
+  it('form working', () => {
+    const email = wrapper.find('#email');
+    const password = wrapper.find('#password');
+    email.simulate('change', {
+      target: { name: 'email', value: 'account@domain.ext' },
+    });
+    let submit = wrapper.find("form button[type='submit']");
+    expect(submit.prop('disabled')).toEqual(true);
+    password.simulate('change', {
+      target: { name: 'password', value: 'qwerty' },
+    });
+    submit = wrapper.find("form button[type='submit']");
+    expect(submit.prop('disabled')).toEqual(false);
   });
 });
