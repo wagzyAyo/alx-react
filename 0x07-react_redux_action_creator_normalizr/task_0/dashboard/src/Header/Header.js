@@ -1,55 +1,71 @@
-import React, { useContext } from 'react';
-import logo from '../assets/holberton_logo.jpg';
+import React, { Component } from 'react';
+import logo from '../assets/holberton-logo.jpg';
 import { StyleSheet, css } from 'aphrodite';
 import { AppContext } from '../App/AppContext';
 
-function Header() {
-  const { user, logOut } = useContext(AppContext);
+class Header extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-  return (
-    <>
-      <header className={css(headerStyles.appHeader)}>
-        <img src={logo} alt="logo" className={css(headerStyles.appLogo)}/>
-        <h1 className={css(headerStyles.h1)}>School dashboard</h1>
+  render() {
+    const { user, logOut } = this.context;
+
+    return (
+      <header className={css(styles.header)}>
+        <img className={css(styles.logo)} src={logo} alt='logo' />
+        <h1 className={css(styles.title)}>School dashboard</h1>
+        {user.isLoggedIn && (
+          <p id='logoutSection' className={css(styles.logoutSection)}>
+            Welcome <b>{`${user.email} `}</b>
+            <span onClick={logOut} className={css(styles.logoutSectionSpan)}>
+              (logout)
+            </span>
+          </p>
+        )}
       </header>
-
-      {
-      user.isLoggedIn && <section id="logoutSection">
-        <h2>Welcome<strong> {user.email} </strong><em><a href="#" onClick={logOut}>(logout)</a></em>
-        </h2>
-      </section>
-      }
-    </>
-  );
+    );
+  }
 }
 
-const headerStyles = StyleSheet.create({
-	h1: {
-		marginLeft: '10rem',
-    float: 'right',
-    flex: 2,
-    '@media (max-width: 900px)': {
-      margin: 'auto'
-    }
-	},
+const screenSize = {
+  small: '@media screen and (max-width: 900px)',
+};
 
-	appHeader: {
-		display: 'flex',
-		flexDirection: 'row',
-		alignItems: 'center',
-		color: '#E11D3F',
-		borderBottom: '1px solid #E11D3F',
+const styles = StyleSheet.create({
+  header: {
+    display: 'flex',
+    color: '#e0344a',
+    alignItems: 'center',
+    borderBottom: 'thick solid #e0344a',
     width: '100%',
-    boxSizing: 'border-box'
-	},
-
-	appLogo: {
-		maxHeight: '200px',
-		maxWidth: '200px',
-    height: 'auto',
-    width: 'auto',
-    flex: 1
-	}
+    position: 'fixed',
+  },
+  logo: {
+    width: '144px',
+    [screenSize.small]: {
+      width: '240px',
+    },
+  },
+  title: {
+    margin: 0,
+    [screenSize.small]: {
+      fontSize: '40px',
+    },
+  },
+  logoutSection: {
+    color: 'black',
+    position: 'absolute',
+    right: 0,
+    paddingRight: '20px',
+    alignSelf: 'flex-end',
+  },
+  logoutSectionSpan: {
+    fontStyle: 'italic',
+    cursor: 'pointer',
+  },
 });
+
+Header.contextType = AppContext;
 
 export default Header;
